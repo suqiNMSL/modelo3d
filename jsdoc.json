@@ -1,0 +1,31 @@
+{
+    "plugins": [],
+    "recurseDepth": 10,
+    "source": {
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_",
+        "exclude": ["node_modules", ".git"]
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": false
+        }
+    },
+    "opts": {
+        "template": "node_modules/minami",  
+        "encoding": "utf8",               // same as -e utf8
+        "destination": "./manual/",       
+        "recurse": true,                  // same as -r
+        "tutorials": "./docs"             // same as -u path/to/tutorials
+    }
+}

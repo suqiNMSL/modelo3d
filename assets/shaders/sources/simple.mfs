@@ -1,0 +1,39 @@
+precision mediump float;
+
+struct CullStruct
+{
+    bool enabled;
+    vec3 minPoint;
+    vec3 maxPoint;
+};
+
+uniform CullStruct uCull;
+uniform vec4 uColor; 
+
+varying mediump vec3 vVertex;
+
+void main()
+{
+    if (uCull.enabled) 
+    {
+        if (vVertex.x < uCull.minPoint.x || 
+            vVertex.x > uCull.maxPoint.x || 
+            vVertex.y < uCull.minPoint.y || 
+            vVertex.y > uCull.maxPoint.y || 
+            vVertex.z < uCull.minPoint.z || 
+            vVertex.z > uCull.maxPoint.z) 
+        {
+            discard;
+        }
+    } // fuck me
+
+    vec3 albedo = uColor.rgb;
+    
+#ifdef COLOR_ENHANCE
+    albedo = enhanceColor(albedo);
+#endif 
+
+    gl_FragColor = vec4(albedo, uColor.a);
+}
+
+

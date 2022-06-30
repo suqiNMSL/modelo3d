@@ -1,0 +1,31 @@
+fronted_dev:
+    build:
+        context: .
+        dockerfile: Dockerfile_old
+        args:
+            ENVIRONMENT: develop
+            BRANCH: develop
+        encrypted_args_file: codeship/github-token.encrypted
+    cached: false
+
+fronted_prod:
+    build:
+        context: .
+        dockerfile: Dockerfile_old
+        args:
+            ENVIRONMENT: production
+            BRANCH: master
+        encrypted_args_file: codeship/github-token.encrypted
+    cached: false
+
+ssh_dev:
+    image: instrumentisto/rsync-ssh
+    # Contains $PRIVATE_SSH_KEY variable with encrypted key
+    encrypted_env_file: codeship/sshkey-dev.encrypted
+    cached: true
+
+ssh_prod:
+    image: instrumentisto/rsync-ssh
+    # Contains $PRIVATE_SSH_KEY variable with encrypted key
+    encrypted_env_file: codeship/sshkey-prod.encrypted
+    cached: true

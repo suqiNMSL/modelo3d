@@ -1,0 +1,20 @@
+uniform mat4 uMVPMatrix;
+uniform float uNormalFlipped;
+
+attribute vec3 aPosition;
+attribute vec3 aNormal;
+attribute vec2 aTexCoord0;
+
+varying mediump vec3 vVertex;
+varying mediump vec3 vNormal;
+varying mediump vec2 vTexCoord0;
+
+void main()
+{
+    gl_Position = uMVPMatrix * vec4(aPosition, 1.0);
+    vNormal = uNormalFlipped * aNormal;
+    vVertex = aPosition;
+    vTexCoord0 = aTexCoord0;
+}
+
+

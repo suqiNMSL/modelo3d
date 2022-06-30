@@ -1,0 +1,105 @@
+/**
+ * @fileoverview modelo3d - an architect/BIM 3D rendering engine
+ * @author Modelo, Inc
+ * @version 2.5.0
+ * @copyright Modelo 2014 - 2018, All rights reserved.
+ */
+
+/**
+ * Create and initialize a modelo3d engine object, e.g., var canvas = new modelo3d("canvas", 512, 512);
+ * @constructor
+ * @param {string} canvasName - The ID of canvas that contains the rendering content
+ * @param {integer} width     - The width of canvas DOM
+ * @param {integer} height    - The height of canvas DOM
+ * @param {boolean} isMobile  - If on mobile platform?
+ * @return a modelo3d engine object.
+ */
+function modelo3d(canvasName, width, height, isMobile) {
+}
+
+/**
+ * Uninitalize the modelo3d engine object and release all resources it uses.
+ * @memberof modelo3d
+ */
+modelo3d.prototype.destroy = function() {
+};
+
+/**
+ * Resize the rendering content
+ * @param {integer} width     - The width of canvas DOM
+ * @param {integer} height    - The height of canvas DOM
+ */
+modelo3d.prototype.resize = function(width, height) {
+};
+
+/**
+ * Load a model with given token.
+ * @param {string} modelId - The ID of model. The ID is given after upload model 
+ * to modelo model platform.
+ */
+modelo3d.prototype.loadModel = function(modelId) {
+};
+
+/**
+ * Unload the current model.
+ */
+modelo3d.prototype.unloadModel = function() {
+};
+
+/**
+ * Fetch element information with elementId
+ * @param {integer} elementID - A element ID.
+ * @returns {object} A set of name and value pairs of information of this element. If no such
+ * element with given ID exists, return null.
+ */
+modelo3d.prototype.getElementInfo = function(elementId) {
+};
+
+/**
+ * Get all element IDs of current model.
+ * @return {array} An array of integers for all element IDs within the current model.
+ */
+modelo3d.prototype.getElementIds = function() {
+};
+
+/**
+ * Update the information of element. The function returns a promise that says either 
+ * update succeeds or fails.
+ * @param {integer}        elementId     - A element ID.
+ * @param {string}         propertyName  - The name value of the property.
+ * @param {string|number}  propertyValue - The value of the property. It can be either number of string.
+ * @returns {Promise} Says if the update ok or not.
+ */
+modelo3d.prototype.updateElementProperty = function(elementId, propertyName, propertyValue) {
+};
+
+
+/**
+ * Set the callback to be called when an element is selected.
+ * @param {function} callback - Should be like function callback(elementId)
+ */
+modelo3d.prototype.setOnElementSelect = function(callback) {
+};
+
+/**
+ * Turn on/off the shadow of rendering.
+ * @param {boolean} enabled - true to turn on shadow and false otherwise.
+ */
+modelo3d.prototype.setShadowEnabled = function(enabled) {
+};
+
+/**
+ * Turn on/off the architecture effect of rendering.
+ * @param {boolean} enabled - true to turn on architecture effect and false otherwise.
+ */
+modelo3d.prototype.setAEEnabled = function(enabled) {
+};
+
+/**
+ * Turn on/off the lighting of rendering.
+ * @param {boolean} enabled - true to turn on lighting and false otherwise.
+ */
+modelo3d.prototype.setLightingEnabled = function(enabled) {
+};
+
+

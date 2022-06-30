@@ -1,0 +1,109 @@
+precision highp float;
+
+struct CullStruct
+{
+    bool enabled;
+    vec3 minPoint;
+    vec3 maxPoint;
+};
+uniform CullStruct uCull;
+
+struct LightStruct
+{
+    vec3  direction;
+    float intensity;
+    bool  enabled;
+#ifdef ENVMAP_SHADING
+    mat4  envmapMatrix;
+#endif
+};
+uniform LightStruct uLight;
+
+struct MaterialStruct
+{
+    vec3 kd;          // diffuse color
+    float shininess;  // shininess ratio
+    vec3 ks;          // specular 
+    float transparent; // transparent 
+};
+uniform MaterialStruct uMaterial;
+
+uniform vec3 uCameraPosition;
+uniform sampler2D uDiffuseTexture; // bind to texture unit 1
+
+varying mediump vec3 vVertex;
+varying mediump vec3 vNormal;
+varying mediump vec2 vTexCoord0;
+
+#ifdef PHYSICALLY_BASED_SHADING
+#include "pbs.inc"
+#endif 
+
+#ifdef PHONG_SHADING
+#include "phong.inc"
+#endif
+
+#ifdef ENVMAP_SHADING
+#include "envmap.inc"
+#endif
+
+#ifdef SHADOW
+#include "shadow.inc"
+#endif
+
+#ifdef COLOR_ENHANCE
+#include "color.inc"
+#endif
+
+void main()
+{
+    if (uCull.enabled) 
+    {
+        if (vVertex.x < uCull.minPoint.x || 
+            vVertex.x > uCull.maxPoint.x || 
+            vVertex.y < uCull.minPoint.y || 
+            vVertex.y > uCull.maxPoint.y || 
+            vVertex.z < uCull.minPoint.z || 
+            vVertex.z > uCull.maxPoint.z) {
+            discard;
+        }
+    }
+
+    vec3 color = vec3(0);
+
+    vec4 texel = texture2D(uDiffuseTexture, vTexCoord0.xy);
+    vec3 albedo = texel.rgb; /* * uMaterial.kd;*/
+    float transparent =  texel.a * uMaterial.transparent;
+
+#ifdef COLOR_ENHANCE
+    albedo = enhanceColor(albedo);
+#endif 
+
+    vec3 normal = normalize(vNormal);
+
+    if (uLight.enabled) 
+    {
+#ifdef PHYSICALLY_BASED_SHADING
+	color = computePBS(albedo, vVertex, normal);
+#endif
+#ifdef ENVMAP_SHADING
+	color = computeEnvmap(albedo, vVertex, normal);
+#endif
+#ifdef PHONG_SHADING
+	color = computePhong(albedo, vVertex, normal);
+#endif
+    } 
+    else
+    {
+        color = albedo;
+    }
+
+#ifdef SHADOW
+    if (uShadow.enabled) 
+    {
+        color *= computeShadow(vVertex, normal);
+    }
+#endif
+
+    gl_FragColor = vec4(color, transparent);
+}

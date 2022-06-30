@@ -1,0 +1,2 @@
+1. make renderQueues in renderScene private
+2. enable gamma in shader source building instead of compiling 

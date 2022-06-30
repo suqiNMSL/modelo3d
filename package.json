@@ -1,0 +1,38 @@
+{
+  "name": "modelo3d",
+  "version": "1.0.0",
+  "description": "the rendering engine of modelo.io",
+  "main": "glMatrix.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "jsdoc": "jsdoc -c jsdoc.json modelo3d.jsdoc --readme \"docs/Programming Guide.md\""
+  },
+  "engines": {
+    "node": "^5.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modelo/MODELO_modelo3d.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-jasmine-browser": "^1.7.1",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-print": "^2.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-shell": "^0.4.3",
+    "gulp-sort": "^2.0.0",
+    "gulp-util": "^3.0.3",
+    "gulp-watch": "^4.1.1",
+    "minami": "^1.2.3",
+    "rollup": "^0.41.6"
+  },
+  "bugs": {
+    "url": "https://github.com/modelo/MODELO_modelo3d/issues"
+  },
+  "homepage": "https://github.com/modelo/MODELO_modelo3d#readme"
+}

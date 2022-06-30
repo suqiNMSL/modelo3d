@@ -1,0 +1,11 @@
+uniform mat4 uMVPMatrix;
+
+attribute vec3 aPosition;
+
+varying mediump vec3 vVertex;
+
+void main()
+{
+    gl_Position = uMVPMatrix * vec4(aPosition, 1.0);
+    vVertex = aPosition;
+}

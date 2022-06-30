@@ -1,0 +1,46 @@
+# - type: serial
+#   tag: develop
+#   steps:
+#     - type: serial
+#       service: fronted_dev
+#       encrypted_dockercfg_path: codeship/auth-registry.encrypted
+#       steps:
+#         - name: Push To DEVELOP Private Registry with Tag easy to debug
+#           type: push
+#           image_name: dev-registry.modelo.io:5000/nginx
+#           image_tag:
+#               "{{.Branch}}-{{.CommitID}}-{{.StringTime}}"
+#           registry: dev-registry.modelo.io:5000
+#         # Pushing image with Latest tage automatically removes one from the previous latest
+#         - name: Push To DEVELOP Private Registry with Latest Tag
+#           type: push
+#           image_name: dev-registry.modelo.io:5000/nginx
+#           image_tag: latest
+#           registry: dev-registry.modelo.io:5000
+#     - name: Redeploy service in Develop Docker Swarm
+#       service: ssh_dev
+#       # The command is extremely long, but I did not find a way to run a multi-line command with CodeShip
+#       command: sh -c "mkdir /.ssh && echo -e $PRIVATE_SSH_KEY >> /.ssh/id_rsa && chmod 0400 /.ssh/id_rsa && ssh -i /.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@54.190.63.81 'sudo ENVIRONMENT=dev docker stack deploy --with-registry-auth -c docker/dstack3-proxy.yml proxy'"
+
+# - type: serial
+#   tag: master
+#   steps:
+#     - type: serial
+#       service: fronted_prod
+#       encrypted_dockercfg_path: codeship/auth-registry.encrypted
+#       steps:
+#         - name: Push To PRODUCTION Private Registry with Tag easy to debug
+#           type: push
+#           image_name: prod-registry.modelo.io:5000/nginx
+#           image_tag: "{{.Branch}}-{{.CommitID}}-{{.StringTime}}"
+#           registry: prod-registry.modelo.io:5000
+#     # Pushing image with Latest tage automatically removes one from the previous latest
+#         - name: Push To PRODUCTION Private Registry with Latest Tag
+#           type: push
+#           image_name: prod-registry.modelo.io:5000/nginx
+#           image_tag: latest
+#           registry: prod-registry.modelo.io:5000
+#     - name: Redeploy service in Prod Docker Swarm
+#       service: ssh_prod
+#       # The command is extremely long, but I did not find a way to run a multi-line command with CodeShip
+#       command: sh -c "mkdir /.ssh && echo -e $PRIVATE_SSH_KEY >> /.ssh/id_rsa && chmod 0400 /.ssh/id_rsa && ssh -i /.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@54.69.79.242 'sudo ENVIRONMENT=prod docker stack deploy --with-registry-auth -c docker/dstack3-proxy.yml proxy'"

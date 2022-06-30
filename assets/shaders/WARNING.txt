@@ -1,0 +1,3 @@
+Encrypt these shaders using
+http://glslunit.appspot.com/compiler.html 
+before release
